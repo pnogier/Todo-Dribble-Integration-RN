@@ -19,7 +19,7 @@ const categories = [
   },
 ];
 
-const CategoriesList = () => {
+const CategoriesList: React.FC = () => {
   return (
     <ScrollView
       showsHorizontalScrollIndicator={false}

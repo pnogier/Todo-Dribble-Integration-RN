@@ -1,13 +1,15 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 
-const ProgressBar = ({ progress, color }) => {
+export type Props = {
+  progress: number;
+  color: string;
+};
+
+const ProgressBar: React.FC<Props> = ({progress, color}) => {
   return (
     <View style={styles.progress}>
-      <View
-        style={
-          ([StyleSheet.absoluteFill], {backgroundColor: `${color}`, width: `${progress}%`})
-        } />
+      <View style={{backgroundColor: `${color}`, width: `${progress}%`}} />
     </View>
   );
 };

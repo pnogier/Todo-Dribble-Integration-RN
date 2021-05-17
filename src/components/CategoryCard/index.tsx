@@ -2,7 +2,14 @@ import React from 'react'
 import { TouchableOpacity, Text, StyleSheet } from 'react-native'
 import ProgressBar from '../ProgressBar'
 
-const CategoryCard = ({ title, color, taskCount, completed }) => {
+export type Props = {
+  title: string,
+  color: string,
+  taskCount: number,
+  completed: number
+}
+
+const CategoryCard: React.FC<Props> = ({ title, color, taskCount, completed }) => {
   return (
     <TouchableOpacity style={styles.card}>
       <Text style={styles.count}>{taskCount} tasks</Text>

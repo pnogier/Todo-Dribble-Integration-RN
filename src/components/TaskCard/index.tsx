@@ -1,8 +1,13 @@
 import React from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
-import {Icon, Row} from 'native-base'
+import {Icon, Row} from 'native-base';
 
-const TaskCard = ({title, color}) => {
+export type Props = {
+  title: string;
+  color: string;
+};
+
+const TaskCard: React.FC<Props> = ({title, color}) => {
   return (
     <TouchableOpacity style={styles.card}>
       <Icon

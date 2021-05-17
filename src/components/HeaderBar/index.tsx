@@ -2,7 +2,7 @@ import React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {Icon} from 'native-base';
 
-const HeaderBar = () => {
+const HeaderBar: React.FC = () => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.leftContainer}>
