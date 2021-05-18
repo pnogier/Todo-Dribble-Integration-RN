@@ -6,9 +6,13 @@ import Subtitle from '@components/Subtitle';
 import CategoriesList from '@components/CategoriesList';
 import TasksList from '@components/TasksList';
 
-const Home: React.FC = () => {
+export interface IHome {
+  style: object
+}
+
+const Home: React.FC<IHome> = ({ style }) => {
   return (
-    <View style={styles.container}>
+    <View style={{flex: 1, ...style}}>
       <HeaderBar />
       <WelcomeMessage name={'Paul'} />
       <Subtitle title={'Categories'} />
@@ -18,11 +22,5 @@ const Home: React.FC = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default Home;

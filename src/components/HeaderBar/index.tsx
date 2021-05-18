@@ -6,13 +6,6 @@ const HeaderBar: React.FC = () => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.leftContainer}>
-        <TouchableOpacity>
-          <Icon
-            type="MaterialIcons"
-            name="drag-handle"
-            style={{color: '#8B97C9', fontSize: 50}}
-          />
-        </TouchableOpacity>
       </View>
       <View style={styles.rightContainer}>
         <TouchableOpacity>

@@ -1,11 +1,17 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
-import Home from './src/screens/Home';
+import { NavigationContainer } from '@react-navigation/native';
+
+import Drawer from './src/navigation/Drawer';
+import Home from './src/screens/Home'
+
 
 const App: React.FC = () => {
   return (
     <SafeAreaView style={styles.safeContainer}>
-      <Home />
+      <NavigationContainer>
+        <Drawer />
+      </NavigationContainer>
     </SafeAreaView>
   );
 };
