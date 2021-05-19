@@ -7,12 +7,13 @@ import CategoriesList from '@components/CategoriesList';
 import TasksList from '@components/TasksList';
 
 export interface IHome {
-  style: object
+  style: any,
+  navigation: any
 }
 
 const Home: React.FC<IHome> = ({ style }) => {
   return (
-    <View style={{flex: 1, ...style}}>
+    <View style={{flex: 1, backgroundColor: '#FAFBFE', ...style}}>
       <HeaderBar />
       <WelcomeMessage name={'Paul'} />
       <Subtitle title={'Categories'} />

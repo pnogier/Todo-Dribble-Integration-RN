@@ -7,21 +7,22 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
-import Animated from 'react-native-reanimated';
+import Animated, {useAnimatedStyle} from 'react-native-reanimated';
 
 import Home from '../../screens/Home';
 
 const DrawerNavigator = createDrawerNavigator();
 const StackNavigator = createStackNavigator();
 
-export interface IScreens {
+const {interpolateNode} = Animated;
+interface IScreens {
   navigation: any;
   style: any;
 }
 
 const Screens: React.FC<IScreens> = ({navigation, style}) => {
   return (
-    <Animated.View style={{...styles.stack}}>
+    <Animated.View style={StyleSheet.flatten([styles.stack, style])}>
       <StackNavigator.Navigator
         screenOptions={{
           headerTransparent: true,
@@ -51,27 +52,37 @@ const DrawerContent: React.FC = props => {
       scrollEnabled={false}
       contentContainerStyle={{flex: 1}}>
       <View>
-        <View>
-          <Image
-            source={{
-              uri: 'https://www.facebook.com/photo?fbid=3407508212620272&set=a.144975715540221',
-            }}
-            //resizeMode="center"
-            style={{height: 80, width: 80, ...styles.avatar}}
-          />
-          <TouchableOpacity
-            style={styles.closeButton}
-            onPress={() => props.navigation.closeDrawer()}>
-            <Icon
-              type="MaterialIcons"
-              name="chevron-left"
-              style={{color: '#F8FBFF', fontSize: 40}}
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{justifyContent: 'flex-end'}}>
+            <Image
+              source={{
+                uri: 'https://scontent-cdt1-1.xx.fbcdn.net/v/t1.6435-9/118663948_3407508219286938_1816877534335718097_n.jpg?_nc_cat=103&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=s4vR3kzw6qAAX8NU5wp&_nc_ht=scontent-cdt1-1.xx&oh=784111390450678a8ab54babd24c42cb&oe=60C823FF',
+              }}
+              style={{
+                height: 80,
+                width: 80,
+                ...styles.avatar,
+                marginLeft: 25,
+                marginTop: 65,
+                marginBottom: 45,
+              }}
             />
-          </TouchableOpacity>
-          <View style={{ paddingLeft: 22, paddingBottom: 20}}>
-            <Text style={styles.name}>Paul</Text>
-            <Text style={styles.name}>Nogier</Text>
           </View>
+          <View>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => props.navigation.closeDrawer()}>
+              <Icon
+                type="MaterialIcons"
+                name="chevron-left"
+                style={{color: '#F8FBFF', fontSize: 40}}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={{paddingLeft: 22, paddingBottom: 20}}>
+          <Text style={styles.name}>Paul</Text>
+          <Text style={styles.name}>Nogier</Text>
         </View>
         <View>
           <DrawerItem
@@ -91,7 +102,7 @@ const DrawerContent: React.FC = props => {
             label="Messages"
             labelStyle={styles.drawerLabel}
             style={styles.drawerItem}
-            onPress={() => props.navigation.navigate('Messages')}
+            onPress={() => console.log('Messages')}
             icon={() => (
               <Icon
                 type="MaterialIcons"
@@ -104,7 +115,7 @@ const DrawerContent: React.FC = props => {
             label="Analytics"
             labelStyle={styles.drawerLabel}
             style={styles.drawerItem}
-            onPress={() => props.navigation.navigate('Contact')}
+            onPress={() => console.log('Analytics')}
             icon={() => (
               <Icon
                 type="MaterialIcons"
@@ -117,7 +128,7 @@ const DrawerContent: React.FC = props => {
             label="Settings"
             labelStyle={styles.drawerLabel}
             style={styles.drawerItem}
-            onPress={() => props.navigation.navigate('Contact')}
+            onPress={() => console.log('Settings')}
             icon={() => (
               <Icon
                 type="MaterialIcons"
@@ -134,23 +145,26 @@ const DrawerContent: React.FC = props => {
 
 const Drawer: React.FC = () => {
   const [progress, setProgress] = useState(new Animated.Value(0));
-  const scale = Animated.interpolateNode(progress, {
+
+  const scale = interpolateNode(progress, {
     inputRange: [0, 1],
-    outputRange: [0, 0.8],
+    outputRange: [1, 0.8],
   });
-  const borderRadius = Animated.interpolateNode(progress, {
+  const borderRadius = interpolateNode(progress, {
     inputRange: [0, 1],
     outputRange: [0, 16],
   });
 
-  const animatedStyle = {borderRadius, transform: [{scale}]};
+  const animatedStyle = {
+    borderRadius,
+    transform: [{scale}],
+  };
 
   return (
     <DrawerNavigator.Navigator
       drawerType="slide"
       overlayColor="transparent"
       drawerStyle={styles.drawerStyles}
-      contentContainerStyle={{flex: 1}}
       drawerContentOptions={{
         activeBackgroundColor: 'transparent',
         activeTintColor: 'white',
@@ -162,7 +176,7 @@ const Drawer: React.FC = () => {
         return <DrawerContent {...props} />;
       }}>
       <DrawerNavigator.Screen name="Screens">
-        {props => <Screens {...props} style={animatedStyle} />}
+        {props => <Screens {...props} style={{...animatedStyle}} />}
       </DrawerNavigator.Screen>
     </DrawerNavigator.Navigator>
   );
@@ -182,22 +196,25 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 35,
     color: '#FFF',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   drawerStyles: {flex: 1, width: '50%', backgroundColor: '#11225B'},
   drawerItem: {alignItems: 'flex-start', marginVertical: 0},
   drawerLabel: {color: '#E0E0E5', marginLeft: -16, width: 300, fontSize: 20},
   avatar: {
-    borderRadius: 60,
+    borderRadius: 50,
     marginBottom: 16,
     borderColor: '#F8FBFF',
     borderWidth: 2,
   },
   closeButton: {
+    padding: 5,
     borderRadius: 50,
-    borderWidth: 0.5,
+    borderWidth: 1,
     borderColor: '#F8FBFF',
-    width: 43,
+    width: 52,
+    marginRight: 20,
+    marginTop: 30,
   },
 });
 
